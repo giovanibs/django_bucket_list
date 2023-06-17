@@ -35,3 +35,6 @@ media/
 # Ignore sensitive or private information
 secret_key.txt
 
+# Others
+misc/
+

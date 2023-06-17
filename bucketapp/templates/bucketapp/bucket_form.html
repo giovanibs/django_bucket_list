@@ -1,0 +1,33 @@
+{% extends 'bucketapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div>
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Bucket</legend>
+            {{ form|crispy }}
+        </fieldset>
+        
+        <div class="d-flex justify-content-between">
+            <div>
+                {% if view_type == 'create' %}        
+                    <input type="submit" value="Create">
+                    <a href="{% url 'bucket-list' %}">Go Back</a>
+                {% else %}
+                    <input type="submit" value="Update">
+                    <a class="btn" href="{% url 'bucket-detail' bucket.id %}">Go Back</a>
+                    <a class="btn btn-outline-danger" href="{% url 'bucket-delete' bucket.id %}">Delete</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </form>
+    <p>{{ form_url }}</p>
+    </div>
+
+
+{% endblock content %}

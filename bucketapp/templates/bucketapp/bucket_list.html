@@ -1,0 +1,34 @@
+{% extends 'bucketapp/base.html' %} {% block content %}
+
+<div class="d-flex justify-content-between w-75">
+  <h1>Your Buckets</h1>
+  <a href="{% url 'bucket-create' %}" class="fs-1 text-decoration-none">
+    <i class="fa-solid fa-circle-plus"></i>
+  </a>
+</div>
+<ul class="list-group">
+  {% for bucket in buckets %}
+  <li
+    class="d-flex justify-content-between align-items-center w-75 p-3 list-group-item list-group-item-action"
+  >
+    <a class="text-decoration-none" href="{% url 'bucket-detail' bucket.id %}">
+      {{ bucket.title }}
+      <small class="text-body-secondary">({{ bucket.owner }})</small>
+    </a>
+
+    <span>
+      <small class="text-body-secondary">Tasks: </small>
+      <span
+        class="badge bg-primary rounded-pill text-decoration-none"
+        href="{% url 'bucket-detail' bucket.id %}"
+        >{{ bucket.tasks.count }}</span
+      >
+    </span>
+
+  </li>
+  {% empty %}
+  <li>No buckets yet.</li>
+  {% endfor %}
+</ul>
+
+{% endblock content %}

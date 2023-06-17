@@ -1,0 +1,10 @@
+{% extends 'bucketapp/base.html' %} {% block content %}
+<div class="card card-body mt-3">
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ task }}"?</p>
+    {{ form }}
+    <input type="submit" value="Confirm">
+    <a class="btn btn-info" href="{% url 'bucket-detail' task.bucket.id %}">Go Back</a>
+</form>
+</div>
+{% endblock content %}

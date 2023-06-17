@@ -1,0 +1,37 @@
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Virtual environment
+venv/
+.env
+
+# Logs
+*.log
+
+# Database
+*.sqlite3
+
+# Static files
+staticfiles/
+
+# Media files
+media/
+
+# Ignore environment-specific settings
+.env.local
+.env.dev
+.env.prod
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore local development settings
+*.bak
+*.swp
+*~
+
+# Ignore sensitive or private information
+secret_key.txt
+

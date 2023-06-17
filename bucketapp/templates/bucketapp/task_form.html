@@ -1,0 +1,24 @@
+{% extends 'bucketapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container-lg mt-3"> 
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Task</legend>
+            {{ form|crispy }}
+        </fieldset>
+
+        {% if view_type == 'create' %}        
+            <input type="submit" value="Create">
+        {% else %}
+            <input type="submit" value="Update">
+            <a href="{% url 'bucket-detail' object.bucket.id %}">Go Back</a>
+        {% endif %}
+            
+    
+    </form>
+</div>
+
+{% endblock content %}

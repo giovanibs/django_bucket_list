@@ -60,8 +60,12 @@
               <span class="badge rounded-pill text-bg-secondary"><i class="fa-regular fa-pen-to-square"></i></span>
             </a>
             
-            <a class="text-decoration-none" href="{% url 'task-update' task.id %}">
-              <span class="badge rounded-pill text-bg-success"><i class="fa-regular fa-circle-check"></i></span>
+            <a class="text-decoration-none" href="{% url 'task-complete' task.id %}">
+              {% if task.complete %}
+                <span class="badge rounded-pill text-bg-warning"><i class="fa-solid fa-recycle"></i></span>
+              {% else %}
+                <span class="badge rounded-pill text-bg-success"><i class="fa-regular fa-circle-check"></i></span>
+              {% endif %}
             </a>
             
             <a class="text-decoration-none" href="{% url 'task-delete' task.id %}">

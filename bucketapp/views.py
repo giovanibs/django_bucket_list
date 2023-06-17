@@ -3,8 +3,9 @@ from django.views.generic import (
     )
 from bucketapp.models import Bucket, Task
 from django.contrib import messages
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 def register(request):
@@ -81,3 +82,10 @@ class TaskDelete(DeleteView):
 class BucketDelete(DeleteView):
     model = Bucket
     success_url = reverse_lazy('bucket-list')
+    
+    
+def task_complete(request, pk):
+    task = get_object_or_404(Task, id=pk)
+    task.complete = not task.complete
+    task.save()
+    return HttpResponseRedirect(reverse('bucket-detail', args=[task.bucket.pk]))

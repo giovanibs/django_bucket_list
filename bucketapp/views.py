@@ -6,16 +6,11 @@ from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
-def register(request):
-    return render(
-        request=request,
-        template_name='bucket/register.html'
-    )    
-  
-    
-class TaskCreate(CreateView):
+
+class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = [
         'title',
@@ -31,7 +26,7 @@ class TaskCreate(CreateView):
         return context
     
     
-class BucketCreate(CreateView):
+class BucketCreate(LoginRequiredMixin, CreateView):
     model = Bucket
     
     # @todo: remove 'owner' field after adding user authentication 
@@ -43,7 +38,7 @@ class BucketCreate(CreateView):
         return context
     
 
-class BucketList(ListView):
+class BucketList(LoginRequiredMixin, ListView):
     model = Bucket
     context_object_name = 'buckets'
     paginate_by = 10
@@ -53,7 +48,7 @@ class BucketList(ListView):
         return context
 
 
-class BucketDetail(DetailView):
+class BucketDetail(LoginRequiredMixin, DetailView):
     model = Bucket
     context_object_name = 'bucket'
 
@@ -64,26 +59,27 @@ class BucketDetail(DetailView):
         return context
 
 
-class TaskUpdate(UpdateView):
+class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
     fields = '__all__'
     
     
-class BucketUpdate(UpdateView):
+class BucketUpdate(LoginRequiredMixin, UpdateView):
     model = Bucket
     fields = '__all__'
     
     
-class TaskDelete(DeleteView):
+class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     success_url = reverse_lazy('bucket-list')
     
     
-class BucketDelete(DeleteView):
+class BucketDelete(LoginRequiredMixin, DeleteView):
     model = Bucket
     success_url = reverse_lazy('bucket-list')
     
-    
+
+@login_required 
 def task_complete(request, pk):
     task = get_object_or_404(Task, id=pk)
     task.complete = not task.complete

@@ -27,32 +27,23 @@
             >Home</a
           >
         </li>
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            data-bs-toggle="dropdown"
-            href="#"
-            role="button"
-            aria-haspopup="true"
-            aria-expanded="false"
-            >User</a
-          >
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#tab2Id">Register</a>
-            <a class="dropdown-item" href="#tab3Id">Login</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#tab4Id">Logout</a>
-          </div>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a href="{% url 'signup' %}" class="nav-link">Register</a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a href="#tab5Id" class="nav-link disabled">Login</a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a href="#" class="nav-link disabled">Logout</a>
-        </li>
+
+        {% if user.is_authenticated %}
+          <li class="nav-item" role="presentation">
+            <a href="#" class="nav-link text-muted text-decoration-none">{{ user }}</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+          </li>
+        
+        {% else %}
+          <li class="nav-item" role="presentation">
+            <a href="{% url 'signup' %}" class="nav-link">Signup</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a href="{% url 'login' %}" class="nav-link">Login</a>
+          </li>
+        {% endif %}
       </ul>
 
       <!-- Tab panes -->

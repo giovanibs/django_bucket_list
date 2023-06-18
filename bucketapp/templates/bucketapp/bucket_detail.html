@@ -48,7 +48,7 @@
           <i>({{ task.assignee|default_if_none:'Not assigned' }})</i>
         </div>
         
-        <div class="collapse" id="collapseExample{{ task.id }}">
+        <div class="collapse mb-3" id="collapseExample{{ task.id }}">
           
           <div class="card card-body mt-2 mb-1">
             {{ task.formatted_description|default:'No description' }}

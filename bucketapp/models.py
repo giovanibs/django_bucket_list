@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+import markdown
+from django.utils.safestring import mark_safe
 
 # Create your models here.
 
@@ -33,3 +35,7 @@ class Task(models.Model):
     
     def get_absolute_url(self):
         return reverse('bucket-detail', kwargs={'pk': self.bucket.pk})
+    
+    @property
+    def formatted_description(self):
+        return mark_safe(markdown.markdown(self.description))

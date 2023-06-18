@@ -51,7 +51,7 @@
         <div class="collapse" id="collapseExample{{ task.id }}">
           
           <div class="card card-body mt-2 mb-1">
-            {{ task.description|default:'No description' }}
+            {{ task.formatted_description|default:'No description' }}
           </div>
           
           <div class="d-flex justify-content-around fs-3">

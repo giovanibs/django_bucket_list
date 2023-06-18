@@ -80,7 +80,7 @@ class BucketDelete(LoginRequiredMixin, DeleteView):
     
 
 @login_required 
-def task_complete(request, pk):
+def task_toggle_complete(request, pk):
     task = get_object_or_404(Task, id=pk)
     task.complete = not task.complete
     task.save()

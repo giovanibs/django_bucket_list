@@ -8,7 +8,7 @@ from bucketapp.views import (
     TaskCreate,
     TaskDelete,
     BucketDelete,
-    task_complete,
+    task_toggle_complete,
     )
 
 urlpatterns = [
@@ -23,6 +23,6 @@ urlpatterns = [
     # Task
     path("task/create/",    TaskCreate.as_view(), name="task-create"),
     path("task/<int:pk>/update/",  TaskUpdate.as_view(), name="task-update"),
-    path("task/<int:pk>/complete/",  task_complete, name="task-complete"),
+    path("task/<int:pk>/toggle-complete/",  task_toggle_complete, name="task-toggle-complete"),
     path("task/<int:pk>/delete/",  TaskDelete.as_view(), name="task-delete"),
 ]

@@ -13,6 +13,7 @@ from bucketapp.views import (
 
 urlpatterns = [
     path("", BucketList.as_view(), name="bucket-list"),
+    path("home/", BucketList.as_view(), name="home"),
     
     # Bucket
     path("bucket/create/",          BucketCreate.as_view(), name="bucket-create"),

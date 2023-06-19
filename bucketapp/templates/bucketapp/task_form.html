@@ -10,13 +10,15 @@
             {{ form|crispy }}
         </fieldset>
 
+    <div class="d-flex justify-content-between">
         {% if view_type == 'create' %}        
             <input type="submit" value="Create">
         {% else %}
             <input type="submit" value="Update">
-            <a href="{% url 'bucket-detail' object.bucket.id %}">Go Back</a>
-        {% endif %}
-            
+            <a class="btn btn-outline-info" href="{% url 'bucket-detail' object.bucket.id %}">Go Back</a>
+            <a class="btn btn-outline-danger" href="{% url 'task-delete' object.id %}">Delete</a>
+            {% endif %}
+    </div>
     
     </form>
 </div>

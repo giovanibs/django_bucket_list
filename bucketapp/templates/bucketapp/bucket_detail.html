@@ -6,22 +6,20 @@
     
     <div class="d-flex justify-content-between">
       
-      <span class="card-title h1">
-        <i class="fa-solid fa-rectangle-list fs-2"></i>
+      <span class="card-title h1 text-warning-emphasis">
+        <i class="fa-solid fa-rectangle-list"></i>
         {{ bucket.title }}
       </span>
 
-      <a href="{% url 'bucket-update' bucket.id %}" class="fs-3 text-decoration-none">
-        <i class="fa-solid fa-pen-to-square"></i>
+      <a href="{% url 'bucket-update' bucket.id %}" class="fs-3 text-decoration-none text-secondary">
+        <i class="fa-regular fa-pen-to-square"></i>
       </a>
 
     </div>
 
-    <h6 class="card-subtitle mb-2 text-body-secondary">
-      <span class="" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription" aria-expanded="false" aria-controls="collapseDescription">
+      <span class="card-subtitle mb-2 text-body-secondary h5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription" aria-expanded="false" aria-controls="collapseDescription">
         Description &#8693
       </span>
-    </h6>
 
     <div class="collapse mb-3" id="collapseDescription">
       <p class="card-text">{{ bucket.description }}</p>
@@ -78,7 +76,7 @@
               </a>
               
               <a class="text-decoration-none" href="{% url 'task-update' task.id %}">
-                <span class="badge rounded-pill text-bg-secondary"><i class="fa-solid fa-pen-to-square"></i></span>
+                <span class="badge rounded-pill text-bg-secondary"><i class="fa-regular fa-pen-to-square"></i></span>
               </a>
               
               <a class="text-decoration-none" href="{% url 'task-delete' task.id %}">

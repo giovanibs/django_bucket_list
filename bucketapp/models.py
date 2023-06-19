@@ -22,6 +22,10 @@ class Bucket(models.Model):
     @property
     def tasks_completed_count(self):
         return self.tasks.filter(complete=True).count()
+    
+    @property
+    def all_tasks_completed(self):
+        return bool(not self.tasks.all().count() or self.tasks.filter(complete=False).count())
 
 
 class Task(models.Model):

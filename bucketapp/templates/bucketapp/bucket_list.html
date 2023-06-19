@@ -26,10 +26,15 @@
           
           <div class="card-footer text-body-secondary d-flex justify-content-around"> 
             <span class="text-body-secondary fs-6">Completed tasks: </span>
-            <span
-              class="badge bg-secondary rounded-pill fs-6"
-              >{{ bucket.tasks_completed_count }}/{{ bucket.tasks.count }}</span
-            >
+              <span class="badge 
+                {% if bucket.all_tasks_completed %}
+                  bg-secondary
+                {% else %}
+                  bg-success
+                {% endif %}
+              rounded-pill fs-6">
+                  {{ bucket.tasks_completed_count }}/{{ bucket.tasks.count }}
+              </span>
           </div>
       </div>
     </div>

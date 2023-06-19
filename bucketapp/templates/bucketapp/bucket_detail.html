@@ -3,14 +3,18 @@
 <div class="card mt-3" style="max-width: 540px">
   
   <div class="card-header">
+    
     <div class="d-flex justify-content-between">
+      
       <span class="card-title h1">
         <i class="fa-solid fa-rectangle-list fs-2"></i>
         {{ bucket.title }}
       </span>
+
       <a href="{% url 'bucket-update' bucket.id %}" class="fs-3 text-decoration-none">
         <i class="fa-solid fa-pen-to-square"></i>
       </a>
+
     </div>
 
     <h6 class="card-subtitle mb-2 text-body-secondary">
@@ -35,61 +39,62 @@
     </div>
 
     <ul class="list-group list-group-flush">
-      {% for task in ordered_task_list %}
       
-      <li class="list-group-item">
-        
-        <div class="d-flex justify-content-between">
-          {% if task.complete %}
-            <span class="fs-5 badge text-bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ task.id }}" aria-expanded="false" aria-controls="collapseExample{{ task.id }}">
-              <del>{{ task.title }}</del>
-            </span>
-          {% else %}
-            <span class="fs-5 badge text-bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ task.id }}" aria-expanded="false" aria-controls="collapseExample{{ task.id }}">
-              {{ task.title }}
-            </span>
-          {% endif %}
-
-          <i>({{ task.assignee|default_if_none:'Not assigned' }})</i>
-        </div>
-        
-        <div class="collapse mb-3" id="collapseExample{{ task.id }}">
+      {% for task in ordered_task_list %}
+        <li class="list-group-item">
           
-          <div class="card card-body mt-2 mb-1">
-            {{ task.formatted_description|default:'No description' }}
+          <div class="d-flex justify-content-between">
+            {% if task.complete %}
+              <span class="fs-5 badge text-bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ task.id }}" aria-expanded="false" aria-controls="collapseExample{{ task.id }}">
+                <del>{{ task.title }}</del>
+              </span>
+            {% else %}
+              <span class="fs-5 badge text-bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ task.id }}" aria-expanded="false" aria-controls="collapseExample{{ task.id }}">
+                {{ task.title }}
+              </span>
+            {% endif %}
+
+            <i>({{ task.assignee|default_if_none:'Not assigned' }})</i>
           </div>
           
-          <div class="d-flex justify-content-around fs-3">
+          <div class="collapse mb-3" id="collapseExample{{ task.id }}">
             
-            <a class="text-decoration-none" href="{% url 'task-toggle-complete' task.id %}">
-              {% if task.complete %}
-                <span class="badge rounded-pill text-bg-warning"><i class="fa-solid fa-recycle"></i></span>
-              {% else %}
-                <span class="badge rounded-pill text-bg-success"><i class="fa-solid fa-circle-check"></i></span>
-              {% endif %}
-            </a>
+            <div class="card card-body mt-2 mb-1">
+              {{ task.formatted_description|default:'No description' }}
+            </div>
             
-            <a class="text-decoration-none" href="{% url 'task-update' task.id %}">
-              <span class="badge rounded-pill text-bg-primary"><i class="fa-solid fa-up-right-from-square"></i></span>
-            </a>
-            
-            <a class="text-decoration-none" href="{% url 'task-update' task.id %}">
-              <span class="badge rounded-pill text-bg-secondary"><i class="fa-solid fa-pen-to-square"></i></span>
-            </a>
-            
-            <a class="text-decoration-none" href="{% url 'task-delete' task.id %}">
-              <span class="badge rounded-pill text-bg-dark"><i class="fa-solid fa-trash-can"></i></span>
-            </a>
+            <div class="d-flex justify-content-around fs-3">
+              
+              <a class="text-decoration-none" href="{% url 'task-toggle-complete' task.id %}">
+                {% if task.complete %}
+                  <span class="badge rounded-pill text-bg-warning"><i class="fa-solid fa-recycle"></i></span>
+                {% else %}
+                  <span class="badge rounded-pill text-bg-success"><i class="fa-solid fa-circle-check"></i></span>
+                {% endif %}
+              </a>
+              
+              <a class="text-decoration-none" href="{% url 'task-update' task.id %}">
+                <span class="badge rounded-pill text-bg-primary"><i class="fa-solid fa-up-right-from-square"></i></span>
+              </a>
+              
+              <a class="text-decoration-none" href="{% url 'task-update' task.id %}">
+                <span class="badge rounded-pill text-bg-secondary"><i class="fa-solid fa-pen-to-square"></i></span>
+              </a>
+              
+              <a class="text-decoration-none" href="{% url 'task-delete' task.id %}">
+                <span class="badge rounded-pill text-bg-dark"><i class="fa-solid fa-trash-can"></i></span>
+              </a>
 
+            </div>
+            
           </div>
-          
-        </div>
-      </li>
-
+        </li>
       {% empty %}
-      <li class="list-group-item">No tasks yet.</li>
+        <li class="list-group-item">No tasks yet.</li>
       {% endfor %}
+
     </ul>
+  
   </div>
 
 </div>

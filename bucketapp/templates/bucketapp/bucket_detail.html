@@ -1,6 +1,6 @@
 {% extends 'bucketapp/base.html' %} {% block content %}
 
-<div class="card mt-3" style="max-width: 30rem">
+<div class="card mt-3" style="max-width: 540px">
   
   <div class="card-header">
     <div class="d-flex justify-content-between">
@@ -12,11 +12,16 @@
         <i class="fa-solid fa-pen-to-square"></i>
       </a>
     </div>
+
     <h6 class="card-subtitle mb-2 text-body-secondary">
-      Owner: {{ bucket.owner }}
+      <span class="" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription" aria-expanded="false" aria-controls="collapseDescription">
+        Description &#8693
+      </span>
     </h6>
-    
-    <p class="card-text">{{ bucket.description }}</p>
+
+    <div class="collapse mb-3" id="collapseDescription">
+      <p class="card-text">{{ bucket.description }}</p>
+    </div>
     
   </div>
   
@@ -40,7 +45,7 @@
               <del>{{ task.title }}</del>
             </span>
           {% else %}
-            <span class="fs-5 badge text-bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ task.id }}" aria-expanded="false" aria-controls="collapseExample{{ task.id }}">
+            <span class="fs-5 badge text-bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ task.id }}" aria-expanded="false" aria-controls="collapseExample{{ task.id }}">
               {{ task.title }}
             </span>
           {% endif %}
@@ -56,20 +61,24 @@
           
           <div class="d-flex justify-content-around fs-3">
             
-            <a class="text-decoration-none" href="{% url 'task-update' task.id %}">
-              <span class="badge rounded-pill text-bg-secondary"><i class="fa-regular fa-pen-to-square"></i></span>
-            </a>
-            
             <a class="text-decoration-none" href="{% url 'task-toggle-complete' task.id %}">
               {% if task.complete %}
                 <span class="badge rounded-pill text-bg-warning"><i class="fa-solid fa-recycle"></i></span>
               {% else %}
-                <span class="badge rounded-pill text-bg-success"><i class="fa-regular fa-circle-check"></i></span>
+                <span class="badge rounded-pill text-bg-success"><i class="fa-solid fa-circle-check"></i></span>
               {% endif %}
             </a>
             
+            <a class="text-decoration-none" href="{% url 'task-update' task.id %}">
+              <span class="badge rounded-pill text-bg-primary"><i class="fa-solid fa-up-right-from-square"></i></span>
+            </a>
+            
+            <a class="text-decoration-none" href="{% url 'task-update' task.id %}">
+              <span class="badge rounded-pill text-bg-secondary"><i class="fa-solid fa-pen-to-square"></i></span>
+            </a>
+            
             <a class="text-decoration-none" href="{% url 'task-delete' task.id %}">
-              <span class="badge rounded-pill text-bg-dark"><i class="fa-regular fa-trash-can"></i></span>
+              <span class="badge rounded-pill text-bg-dark"><i class="fa-solid fa-trash-can"></i></span>
             </a>
 
           </div>

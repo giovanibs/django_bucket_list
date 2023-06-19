@@ -61,6 +61,7 @@ class BucketDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         bucket = self.get_object()  # Get the bucket instance
         context['ordered_task_list'] = bucket.tasks.all().order_by('complete')
+        context['completed_tasks'] = bucket.tasks.filter(complete=True).count()
         return context
 
 

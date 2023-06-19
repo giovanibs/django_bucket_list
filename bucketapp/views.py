@@ -41,7 +41,6 @@ class BucketCreate(LoginRequiredMixin, CreateView):
 class BucketList(LoginRequiredMixin, ListView):
     model = Bucket
     context_object_name = 'buckets'
-    paginate_by = 10
     
     
     def get_queryset(self):

@@ -18,6 +18,10 @@ class Bucket(models.Model):
     
     def get_absolute_url(self):
         return reverse('bucket-detail', kwargs={'pk': self.pk})
+    
+    @property
+    def tasks_completed_count(self):
+        return self.tasks.filter(complete=True).count()
 
 
 class Task(models.Model):

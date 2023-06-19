@@ -29,7 +29,7 @@
             <span
               class="badge bg-primary rounded-pill text-decoration-none"
               href="{% url 'bucket-detail' bucket.id %}"
-              >{{ bucket.completed_tasks }}/{{ bucket.tasks.count }}</span
+              >{{ bucket.tasks_completed_count }}/{{ bucket.tasks.count }}</span
             >
           </div>
       </div>

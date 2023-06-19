@@ -48,20 +48,14 @@ class BucketList(LoginRequiredMixin, ListView):
         return Bucket.objects.filter(owner=request_user)
 
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
-
 class BucketDetail(LoginRequiredMixin, DetailView):
     model = Bucket
     context_object_name = 'bucket'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        bucket = self.get_object()  # Get the bucket instance
+        bucket = self.get_object()
         context['ordered_task_list'] = bucket.tasks.all().order_by('complete')
-        context['completed_tasks'] = bucket.tasks.filter(complete=True).count()
         return context
 
 

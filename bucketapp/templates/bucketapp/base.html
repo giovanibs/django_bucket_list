@@ -45,7 +45,16 @@
           </li>
         {% endif %}
       </ul>
+    </header>
 
+    {% if messages %}
+      <div class="container mt-3">
+          {% for message in messages %}
+              <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+          {% endfor %}
+      </div>
+    {% endif %}
+    
     <div role="main" class="container-fluid">{% block content %}{% endblock %}</div>
 
     <script

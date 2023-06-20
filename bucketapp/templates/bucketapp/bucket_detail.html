@@ -16,10 +16,13 @@
       </a>
 
     </div>
+    <div class="card-subtitle mb-2 text-body-secondary h5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription" aria-expanded="false" aria-controls="collapseDescription">
+      Owner: {{ bucket.owner }}
+    </div>
 
-      <span class="card-subtitle mb-2 text-body-secondary h5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription" aria-expanded="false" aria-controls="collapseDescription">
+      <div class="card-subtitle mb-2 text-body-secondary h5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription" aria-expanded="false" aria-controls="collapseDescription">
         Description &#8693
-      </span>
+      </div>
 
     <div class="collapse mb-3" id="collapseDescription">
       <p class="card-text">{{ bucket.description }}</p>

@@ -28,9 +28,9 @@
             <span class="text-body-secondary fs-6">Completed tasks: </span>
               <span class="badge 
                 {% if bucket.all_tasks_completed %}
-                  bg-secondary
-                {% else %}
                   bg-success
+                {% else %}
+                  bg-secondary
                 {% endif %}
               rounded-pill fs-6">
                   {{ bucket.tasks_completed_count }}/{{ bucket.tasks.count }}

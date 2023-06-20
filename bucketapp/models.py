@@ -25,7 +25,7 @@ class Bucket(models.Model):
     
     @property
     def all_tasks_completed(self):
-        return bool(not self.tasks.all().count() or self.tasks.filter(complete=False).count())
+        return self.tasks.exists() and not self.tasks.filter(complete=False).exists()
 
 
 class Task(models.Model):

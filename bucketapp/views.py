@@ -33,7 +33,7 @@ class TaskCreate(LoginRequiredMixin, CreateView):
             messages.error(self.request,
                        "You are not the owner of this bucket.",
                        # bootstrap tags
-                       extra_tags="alert alert-warning d-flex align-items-center"
+                       extra_tags="alert alert-warning alert-dismissible fade show"
         )
             return self.render_to_response(self.get_context_data(form=form))
         
@@ -84,7 +84,7 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
             messages.error(self.request,
                        "You are not the owner of this bucket.",
                        # bootstrap tags
-                       extra_tags="alert alert-warning d-flex align-items-center"
+                       extra_tags="alert alert-warning alert-dismissible fade show"
         )
             referring_page = request.META.get('HTTP_REFERER')
             return HttpResponseRedirect(referring_page or reverse('bucket-list'))
@@ -104,7 +104,7 @@ class BucketUpdate(LoginRequiredMixin, UpdateView):
             messages.error(self.request,
                        "You are not the owner of this bucket.",
                        # bootstrap tags
-                       extra_tags="alert alert-warning d-flex align-items-center"
+                       extra_tags="alert alert-warning alert-dismissible fade show"
         )
             referring_page = request.META.get('HTTP_REFERER')
             return HttpResponseRedirect(referring_page or reverse('bucket-list'))
@@ -123,7 +123,7 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
             messages.error(self.request,
                        "You are not the owner of this bucket.",
                        # bootstrap tags
-                       extra_tags="alert alert-danger d-flex align-items-center"
+                       extra_tags="alert alert-danger alert-dismissible fade show"
         )
             referring_page = request.META.get('HTTP_REFERER')
             return HttpResponseRedirect(referring_page or reverse('bucket-list'))
@@ -142,7 +142,7 @@ class BucketDelete(LoginRequiredMixin, DeleteView):
             messages.error(self.request,
                        "You are not the owner of this bucket.",
                        # bootstrap tags
-                       extra_tags="alert alert-danger d-flex align-items-center"
+                       extra_tags="alert alert-danger alert-dismissible fade show"
         )
             referring_page = request.META.get('HTTP_REFERER')
             return HttpResponseRedirect(referring_page or reverse('bucket-list'))
@@ -161,6 +161,6 @@ def task_toggle_complete(request, pk):
         messages.error(request,
                        "You are not the owner of the bucket or the task's assignee.",
                        # bootstrap tags
-                       extra_tags="alert alert-warning d-flex align-items-center"
+                       extra_tags="alert alert-warning alert-dismissible fade show"
         )
     return HttpResponseRedirect(reverse('bucket-detail', args=[task.bucket.pk]))

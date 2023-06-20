@@ -18,7 +18,7 @@ class TaskCreate(LoginRequiredMixin, CreateView):
         'bucket',
         'assignee',
     ]
-    
+    template_name = 'bucketapp/task_form.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -35,21 +35,43 @@ class TaskCreate(LoginRequiredMixin, CreateView):
                        # bootstrap tags
                        extra_tags="alert alert-warning alert-dismissible fade show"
         )
-            return self.render_to_response(self.get_context_data(form=form))
+            return render(
+                self.request,
+                self.template_name,
+                self.get_context_data(form=form),
+                status=403
+            )
         
         return super().form_valid(form)
     
     
 class BucketCreate(LoginRequiredMixin, CreateView):
     model = Bucket
-    
-    # @todo: remove 'owner' field after adding user authentication 
     fields = '__all__'
+    template_name = 'bucketapp/bucket_form.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['view_type'] = 'create'
         return context
+    
+    def form_valid(self, form):
+        owner = form.cleaned_data['owner']
+        
+        if self.request.user != owner:
+            messages.error(self.request,
+                       "You cannot create a bucket for another user.",
+                       # bootstrap tags
+                       extra_tags="alert alert-warning alert-dismissible fade show"
+        )
+            return render(
+                self.request,
+                self.template_name,
+                self.get_context_data(form=form),
+                status=403
+            )
+        
+        return super().form_valid(form)
     
 
 class BucketList(LoginRequiredMixin, ListView):
@@ -85,7 +107,7 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
                        "You are not the owner of this bucket.",
                        # bootstrap tags
                        extra_tags="alert alert-warning alert-dismissible fade show"
-        )
+            )
             referring_page = request.META.get('HTTP_REFERER')
             return HttpResponseRedirect(referring_page or reverse('bucket-list'))
 

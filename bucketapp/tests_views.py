@@ -20,6 +20,10 @@ class ViewsTestCase(TestCase):
         self.task = Task.objects.create(title='Test Task', description='Test Description',
                                         bucket=self.bucket, assignee=self.user)
         
+        self.other_task = Task.objects.create(title='Test Task', description='Test Description',
+                                        bucket=self.other_bucket, assignee=self.other_user)
+        
+    # TASK
     def test_task_create_GET(self):
         url = reverse('task-create')
         response = self.client.get(url)
@@ -51,6 +55,87 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 403)
         self.assertTemplateUsed(response, 'bucketapp/task_form.html')
 
+    def test_task_delete_GET(self):
+        url = reverse('task-delete', args=[self.task.pk])
+        response = self.client.get(url)
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('bucketapp/task_delete.html')
+        
+    def test_task_delete_GET_permission_denied(self):
+        url = reverse('task-delete', args=[self.other_task.pk])
+        response = self.client.get(url)
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('bucket-list'))
+    
+    def test_task_delete_POST(self):
+        url = reverse('task-delete', args=[self.task.pk])
+        response = self.client.post(url)
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('bucket-list'))
+        
+    def test_task_delete_POST_permission_denied(self):
+        url = reverse('task-delete', args=[self.other_task.pk])
+        response = self.client.get(url)
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('bucket-list'))
+    
+    def test_task_update_GET(self):
+        url = reverse('task-update', args=[self.task.pk])
+        response = self.client.get(url)
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'bucketapp/task_form.html')
+    
+        # PERMISSION DENIED
+        url = reverse('task-update', args=[self.other_task.pk])
+        response = self.client.get(url)
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('bucket-list'))
+              
+    def test_task_update_POST(self):
+        url = reverse('task-update', args=[self.task.pk])
+        response = self.client.post(url, {
+            'title': self.task.title,
+            'description': self.task.description,
+            'bucket': self.task.bucket.pk,
+            'assignee': self.task.assignee,
+            'complete': self.task.complete,
+        })
+        
+        self.assertEqual(response.status_code, 200)
+    
+        # PERMISSION DENIED
+        url = reverse('task-update', args=[self.other_task.pk])
+        response = self.client.post(url, {
+            'title': self.other_task.title,
+            'description': self.other_task.description,
+            'bucket': self.other_task.bucket.pk,
+            'assignee': self.other_task.assignee,
+            'complete': self.other_task.complete,
+        })
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('bucket-list'))
+    
+    def test_task_toggle_complete_view(self):
+        url = reverse('task-toggle-complete', args=[self.task.pk])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('bucket-detail', args=[self.bucket.pk]))
+        
+        # TEST PERMISSION DENIED FOR NON-OWNER USER OR NON-ASSIGNEE USER
+        url = reverse('task-toggle-complete', args=[self.other_task.pk])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('bucket-detail', args=[self.other_bucket.pk]))
+
+        
+    # BUCKET
     def test_bucket_create_GET(self):
         url = reverse('bucket-create')
         response = self.client.get(url)
@@ -122,96 +207,38 @@ class ViewsTestCase(TestCase):
         
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('bucket-list'))
+      
+    def test_bucket_update_GET(self):
+        url = reverse('bucket-update', args=[self.bucket.pk])
+        response = self.client.get(url)
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'bucketapp/bucket_form.html')
     
-    # def test_bucket_create_view(self):
-    #     url = reverse('bucket-create')
-    #     request = self.factory.get(url)
-    #     request.user = self.user
+        # PERMISSION DENIED
+        url = reverse('bucket-update', args=[self.other_bucket.pk])
+        response = self.client.get(url)
         
-    #     response = BucketCreate.as_view()(request)
-    #     self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('bucket-list'))
         
-    # def test_bucket_list_view(self):
-    #     url = reverse('bucket-list')
-    #     request = self.factory.get(url)
-    #     request.user = self.user
+    def test_bucket_update_POST(self):
+        url = reverse('bucket-update', args=[self.bucket.pk])
+        response = self.client.post(url, {
+            'title': self.bucket.title,
+            'description': self.bucket.description,
+            'owner': self.bucket.owner,
+        })
         
-    #     response = BucketList.as_view()(request)
-    #     self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
+    
+        # PERMISSION DENIED
+        url = reverse('bucket-update', args=[self.other_bucket.pk])
+        response = self.client.post(url, {
+            'title': self.other_bucket.title,
+            'description': self.other_bucket.description,
+            'owner': self.other_bucket.owner,
+        })
         
-    # def test_bucket_detail_view(self):
-    #     url = reverse('bucket-detail', args=[self.bucket.pk])
-    #     request = self.factory.get(url)
-    #     request.user = self.user
-        
-    #     response = BucketDetail.as_view()(request, pk=self.bucket.pk)
-    #     self.assertEqual(response.status_code, 200)
-        
-    # def test_task_update_view(self):
-    #     url = reverse('task-update', args=[self.task.pk])
-    #     request = self.factory.get(url)
-    #     request.user = self.user
-        
-    #     middleware = MessageMiddleware()
-    #     middleware.process_request(request)
-
-    #     response = TaskUpdate.as_view()(request, pk=self.task.pk)
-    #     self.assertEqual(response.status_code, 200)
-        
-    #     # Test permission denied for non-owner user
-    #     request.user = self.other_user
-    #     response = TaskUpdate.as_view()(request, pk=self.task.pk)
-    #     self.assertEqual(response.status_code, 403)
-        
-    # def test_bucket_update_view(self):
-    #     url = reverse('bucket-update', args=[self.bucket.pk])
-    #     request = self.factory.get(url)
-    #     request.user = self.user
-        
-    #     response = BucketUpdate.as_view()(request, pk=self.bucket.pk)
-    #     self.assertEqual(response.status_code, 200)
-        
-    #     # Test permission denied for non-owner user
-    #     request.user = self.other_user
-    #     response = BucketUpdate.as_view()(request, pk=self.bucket.pk)
-    #     self.assertEqual(response.status_code, 403)
-        
-    # def test_task_delete_view(self):
-    #     url = reverse('task-delete', args=[self.task.pk])
-    #     request = self.factory.get(url)
-    #     request.user = self.user
-        
-    #     response = TaskDelete.as_view()(request, pk=self.task.pk)
-    #     self.assertEqual(response.status_code, 200)
-        
-    #     # Test permission denied for non-owner user
-    #     request.user = self.other_user
-    #     response = TaskDelete.as_view()(request, pk=self.task.pk)
-    #     self.assertEqual(response.status_code, 403)
-        
-    # def test_bucket_delete_view(self):
-    #     url = reverse('bucket-delete', args=[self.bucket.pk])
-    #     request = self.factory.get(url)
-    #     request.user = self.user
-        
-    #     response = BucketDelete.as_view()(request, pk=self.bucket.pk)
-    #     self.assertEqual(response.status_code, 200)
-        
-    #     # Test permission denied for non-owner user
-    #     request.user = self.other_user
-    #     response = BucketDelete.as_view()(request, pk=self.bucket.pk)
-    #     self.assertEqual(response.status_code, 403)
-        
-    # def test_task_toggle_complete_view(self):
-    #     url = reverse('task-toggle-complete', args=[self.task.pk])
-    #     request = self.factory.get(url)
-    #     request.user = self.user
-        
-    #     response = task_toggle_complete(request, pk=self.task.pk)
-    #     self.assertEqual(response.status_code, 302)
-    #     self.assertEqual(response.url, reverse('bucket-detail', args=[self.bucket.pk]))
-        
-    #     # Test permission denied for non-owner user or non-assignee user
-    #     request.user = self.other_user
-    #     response = task_toggle_complete(request, pk=self.task.pk)
-    #     self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('bucket-list'))

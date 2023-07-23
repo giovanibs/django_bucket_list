@@ -41,6 +41,7 @@ cd django_bucket_list
 # Using venv (Python 3)
 python3 -m venv venv
 source venv/bin/activate
+</pre>
 
 4. Install the required dependencies:
 
@@ -64,6 +65,12 @@ python manage.py createsuperuser
 
 <pre>
 python manage.py runserver
+</pre>
+
+...or using gunicorn:
+
+<pre>
+gunicorn django_bucket_list.wsgi:application
 </pre>
 
 The application will be accessible at `http://localhost:8000/` in your web browser.

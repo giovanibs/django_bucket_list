@@ -25,46 +25,46 @@ To run this project locally, follow these steps:
 
 1. Clone the repository:
 
-\```bash
+<pre>
 git clone https://github.com/giovanibs/django_bucket_list.git
-\```
+</pre>
 
 2. Change into the project directory:
 
-\```bash
+<pre>
 cd django_bucket_list
-\```
+</pre>
 
 3. It is recommended to set up a virtual environment before installing the project dependencies. You can use `venv` or `virtualenv`:
 
-\```bash
+<pre>
 # Using venv (Python 3)
 python3 -m venv venv
 source venv/bin/activate
 
 4. Install the required dependencies:
 
-\```bash
+<pre>
 pip install -r requirements.txt
-\```
+</pre>
 
 5. Apply the database migrations:
 
-\```bash
+<pre>
 python manage.py migrate
-\```
+</pre>
 
 6. Create a superuser account (an admin account) to manage the application:
 
-\```bash
+<pre>
 python manage.py createsuperuser
-\```
+</pre>
 
 7. Finally, run the development server:
 
-\```bash
+<pre>
 python manage.py runserver
-\```
+</pre>
 
 The application will be accessible at `http://localhost:8000/` in your web browser.
 

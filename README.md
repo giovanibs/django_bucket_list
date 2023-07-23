@@ -1,7 +1,5 @@
 # Django Bucket List Repository
 
-![Bucket List](bucket_list_image.jpg)
-
 Welcome to the **Django Bucket List** repository! This project is a web application built with Django that allows users to create and manage their bucket list items. A bucket list is a collection of goals, dreams, and experiences that a person aspires to accomplish in their lifetime. With this application, users can add, edit, and track their bucket list items, making it easier to stay focused on their life's objectives.
 
 ## Table of Contents

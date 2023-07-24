@@ -4,11 +4,13 @@ Welcome to the **Django Bucket List** repository! This project is a web applicat
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
+- [Django Bucket List Repository](#django-bucket-list-repository)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Contributing](#contributing)
 
 ## Introduction
 
@@ -25,53 +27,53 @@ To run this project locally, follow these steps:
 
 1. Clone the repository:
 
-<pre>
-git clone https://github.com/giovanibs/django_bucket_list.git
-</pre>
+    ```bash
+    git clone https://github.com/giovanibs/django_bucket_list.git
+    ```
 
 2. Change into the project directory:
 
-<pre>
-cd django_bucket_list
-</pre>
+    ```bash
+    cd django_bucket_list
+    ```
 
-3. It is recommended to set up a virtual environment before installing the project dependencies. You can use `venv` or `virtualenv`:
+3. It is recommended to set up a virtual environment before installing the project dependencies. You can use `venv` for isntance:
 
-<pre>
-# Using venv (Python 3)
-python3 -m venv venv
-source venv/bin/activate
-</pre>
+    ```bash
+    # Using venv (Python 3)
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
 
 4. Install the required dependencies:
 
-<pre>
-pip install -r requirements.txt
-</pre>
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 5. Apply the database migrations:
 
-<pre>
-python manage.py migrate
-</pre>
+    ```bash
+    python manage.py migrate
+    ```
 
 6. Create a superuser account (an admin account) to manage the application:
 
-<pre>
-python manage.py createsuperuser
-</pre>
+    ```bash
+    python manage.py createsuperuser
+    ```
 
 7. Finally, run the development server:
 
-<pre>
-python manage.py runserver
-</pre>
+    ```bash
+    python manage.py runserver
+    ```
 
-...or using gunicorn:
+    ...or using gunicorn:
 
-<pre>
-gunicorn django_bucket_list.wsgi:application
-</pre>
+    ```bash
+    gunicorn django_bucket_list.wsgi:application
+    ```
 
 The application will be accessible at `http://localhost:8000/` in your web browser.
 

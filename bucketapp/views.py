@@ -6,11 +6,12 @@ from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
+from bucketapp.custom_utilities import (
+    LoginRequiredOrAnonymousMixin,
+    login_required_or_anonymous
+)
 
-
-class TaskCreate(LoginRequiredMixin, CreateView):
+class TaskCreate(LoginRequiredOrAnonymousMixin, CreateView):
     model = Task
     fields = [
         'title',
@@ -45,7 +46,7 @@ class TaskCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
     
     
-class BucketCreate(LoginRequiredMixin, CreateView):
+class BucketCreate(LoginRequiredOrAnonymousMixin, CreateView):
     model = Bucket
     fields = '__all__'
     template_name = 'bucketapp/bucket_form.html'
@@ -74,7 +75,7 @@ class BucketCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
     
 
-class BucketList(LoginRequiredMixin, ListView):
+class BucketList(LoginRequiredOrAnonymousMixin, ListView):
     model = Bucket
     context_object_name = 'buckets'
     
@@ -84,7 +85,7 @@ class BucketList(LoginRequiredMixin, ListView):
         return Bucket.objects.filter(owner=request_user)
 
 
-class BucketDetail(LoginRequiredMixin, DetailView):
+class BucketDetail(LoginRequiredOrAnonymousMixin, DetailView):
     model = Bucket
     context_object_name = 'bucket'
 
@@ -95,7 +96,7 @@ class BucketDetail(LoginRequiredMixin, DetailView):
         return context
 
 
-class TaskUpdate(LoginRequiredMixin, UpdateView):
+class TaskUpdate(LoginRequiredOrAnonymousMixin, UpdateView):
     model = Task
     fields = '__all__'
     
@@ -114,7 +115,7 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
     
     
-class BucketUpdate(LoginRequiredMixin, UpdateView):
+class BucketUpdate(LoginRequiredOrAnonymousMixin, UpdateView):
     model = Bucket
     fields = '__all__'
     
@@ -134,7 +135,7 @@ class BucketUpdate(LoginRequiredMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     
-class TaskDelete(LoginRequiredMixin, DeleteView):
+class TaskDelete(LoginRequiredOrAnonymousMixin, DeleteView):
     model = Task
     success_url = reverse_lazy('bucket-list')
     
@@ -153,7 +154,7 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
     
     
-class BucketDelete(LoginRequiredMixin, DeleteView):
+class BucketDelete(LoginRequiredOrAnonymousMixin, DeleteView):
     model = Bucket
     success_url = reverse_lazy('bucket-list')
     
@@ -172,7 +173,7 @@ class BucketDelete(LoginRequiredMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
     
 
-@login_required 
+@login_required_or_anonymous 
 def task_toggle_complete(request, pk):
     task = get_object_or_404(Task, id=pk)
     
